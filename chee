@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Breakfast Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .category { background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #d35400; border-bottom: 2px solid #eee; }
+        .item { display: flex; justify-content: space-between; margin: 10px 0; }
+        button { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 18px; cursor: pointer; }
+        input[type="number"] { width: 40px; }
+    </style>
+</head>
+<body>
+
+    <h1>Morning Breakfast</h1>
+    
+    <div class="category">
+        <h2>Drinks</h2>
+        <div class="item">African Tea <input type="number" class="order-item" data-name="African Tea" value="0"></div>
+        <div class="item">Latte <input type="number" class="order-item" data-name="Latte" value="0"></div>
+    </div>
+
+    <div class="category">
+        <h2>Snacks</h2>
+        <div class="item">Sambusa <input type="number" class="order-item" data-name="Sambusa" value="0"></div>
+        <div class="item">Chapati <input type="number" class="order-item" data-name="Chapati" value="0"></div>
+    </div>
+
+    <input type="text" id="table" placeholder="Table Number" style="width:94%; padding:10px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;">
+
+    <button onclick="sendWhatsApp()">Send Order via WhatsApp</button>
+
+    <script>
+        function sendWhatsApp() {
+            const phone = "250XXXXXXXXX"; // REPLACE WITH YOUR PHONE NUMBER
+            let message = "New Order from Table " + document.getElementById('table').value + ":\n";
+            const items = document.querySelectorAll('.order-item');
+            
+            items.forEach(item => {
+                if(item.value > 0) {
+                    message += `- ${item.value}x ${item.getAttribute('data-name')}\n`;
+                }
+            });
+
+            const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
